@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Send Email using Gmail API</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1>Send Email using Gmail API</h1>
+    <form id="send-email-form">
+      <label for="to">To:</label>
+      <input type="email" id="to" name="to"><br><br>
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" name="subject"><br><br>
+      <label for="message">Message:</label><br>
+      <textarea id="message" name="message" rows="5" cols="50"></textarea><br><br>
+      <input type="submit" value="Send Email">
+    </form>
+    <script src="popup.js"></script>
+  </body>
+</html>
