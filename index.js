@@ -5,14 +5,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3030;
 
-
-
 app.get('/', (req, res) => {
   var options = {
     root: path.join(__dirname)
 };
  
-
 var fileName = "rect.png";
  
   console.log(req,"request");
