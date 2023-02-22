@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3080;
 
 app.get('/', (req, res) => {
   var options = {
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
  
 var fileName = "rect.png";
  
-  console.log(req,"request");
+  // console.log(req,"request");
   const timestamp = new Date();
   console.log(timestamp,"time");
   res.sendFile(fileName, options, function (err) {
@@ -25,6 +25,9 @@ var fileName = "rect.png";
 });
   // Log the email open
 });
+app.get('/test', (req, res, next)=>{
+  res.send("Testing");
+})
 app.listen(PORT, function(err){
   console.log(`server started on port ${PORT}`);
 });
