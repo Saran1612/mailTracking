@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   });
 
   let email = req.query.email;
-  let UID = req.query.uid;
+  let UID = req.query.msgId;
   console.log(email,"email");
   console.log(UID,"uid");
 
