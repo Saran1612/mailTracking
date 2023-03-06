@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
   const timestamp = new Date().getTime();
   console.log("Opened At",timestamp);
-  console.log(res,"response");
+  console.log(req,"response");
   let email = req.query.email;
   let UID = req.query.msgId;
   console.log(email,"email");
