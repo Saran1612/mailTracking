@@ -4,9 +4,9 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3080;
 
-const { v4: uuidv4 } = require('uuid');
-const message_id = uuidv4();
-console.log(message_id,"msgid");
+// const { v4: uuidv4 } = require('uuid');
+// const message_id = uuidv4();
+// console.log(message_id,"msgid");
 
 
 app.get("/", (req, res) => {
