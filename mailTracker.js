@@ -17,13 +17,13 @@ app.get("/", (req, res) => {
     if (err) {
       // next(err);
     } else {
-      console.log("Sent:", fileName);
+      // console.log("Sent:", fileName);
     }
   });
 
-  const timestamp = new Date();
-  // console.log(timestamp, "time");
-  console.log("Opened At",moment(timestamp).format('h:mm:ss a'));
+  const timestamp = new Date().getTime();
+  console.log("Opened At",timestamp);
+  console.log(res,"response");
   let email = req.query.email;
   let UID = req.query.msgId;
   console.log(email,"email");
@@ -34,18 +34,6 @@ app.get("/", (req, res) => {
 app.get("/test", (req, res, next) => {
   res.send("Testing");
 });
-
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "Password@123",
-//   database: 'your_database_name',
-// });
-
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
 
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
