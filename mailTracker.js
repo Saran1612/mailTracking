@@ -23,11 +23,11 @@ app.get("/", (req, res) => {
 
   const timestamp = new Date();
   // console.log(timestamp, "time");
-  console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
+  console.log("Opened At",moment(timestamp).format('h:mm:ss a'));
   let email = req.query.email;
   let UID = req.query.msgId;
   console.log(email,"email");
-  console.log(req.query,"uid");
+  console.log(UID,"uid");
 
 });
 
@@ -35,12 +35,12 @@ app.get("/test", (req, res, next) => {
   res.send("Testing");
 });
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Password@123",
-  database: 'your_database_name',
-});
+// var con = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "Password@123",
+//   database: 'your_database_name',
+// });
 
 // con.connect(function(err) {
 //   if (err) throw err;
