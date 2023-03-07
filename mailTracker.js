@@ -25,9 +25,9 @@ app.get("/", (req, res) => {
   console.log("Opened At",timestamp);
   console.log(req,"request");
   console.log(res,"response")
-  // let email = req.query.email;
+  let email = req.query.email;
   let UID = req.query.msgId;
-  // console.log(email,"email");
+  console.log(email,"email");
   console.log(UID,"uid");
 
 });
