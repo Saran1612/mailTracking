@@ -4,7 +4,6 @@ const app = express();
 var moment = require("moment");
 const PORT = process.env.PORT || 3080;
 const db = require("./connection");
-const MailSender = require("./mailSend");
 app.use(express.json());
 
 
@@ -79,11 +78,7 @@ app.get("/test", (req, res, next) => {
   res.send("Testing");
 });
 
-app.post("/sendmail",async(req,res,next)=>{
- 
-  
-  // MailSender.MailSender(res,MysqlQueryExecute);
-})
+
 
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
