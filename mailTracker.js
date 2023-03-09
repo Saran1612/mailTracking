@@ -79,7 +79,7 @@ app.get("/test", (req, res, next) => {
   res.send("Testing");
 });
 
-app.get("/sendmail",(req,res,next)=>{
+app.post("/sendmail",(req,res,next)=>{
   console.log("Inside sendmail")
   console.log(req.body,"Request body");
   
