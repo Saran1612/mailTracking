@@ -36,12 +36,12 @@ console.log(current_time,"Check current date and time")
   console.log(subject, "subject");
   console.log(email, "email");
   console.log(UID, "uid");
-  let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = ${UID} and USER_NAME = ${email}`;
+  let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = ${UID} and USER_NAME = "${email}"`;
   let FinalCount = await MysqlQueryExecute(countQuery);
   console.log(FinalCount, "message count");
   if (FinalCount[0].MESSAGECount !== 0) {
-    let IncrmentQuery = `UPDATE Email_Tracking.MAIL_USER SET Count = Count+1 WHERE UQ_ID = ${UID} and USER_NAME = ${email}`;
-    let UserDataQuery = `Select ID as USERID from Email_Tracking.MAIL_USER where UQ_ID = ${UID} and USER_NAME = ${email} `;
+    let IncrmentQuery = `UPDATE Email_Tracking.MAIL_USER SET Count = Count+1 WHERE UQ_ID = ${UID} and USER_NAME = "${email}"`;
+    let UserDataQuery = `Select ID as USERID from Email_Tracking.MAIL_USER where UQ_ID = ${UID} and USER_NAME = "${email}"`;
 
     
     let FinalResult = await MysqlQueryExecute(IncrmentQuery);
@@ -54,9 +54,9 @@ console.log(current_time,"Check current date and time")
     }
 
   }else{
-    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID, COUNT) VALUES(${email},${UID},1)`);
+    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID, COUNT) VALUES("${email}",${UID},1)`);
 
-    let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME=${email} and UQ_ID = ${UID}`);
+    let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME="${email}" and UQ_ID = ${UID}`);
     console.log(AddedUserId, "Added userId");
     if(AddedUserId.length > 0){
         const current_time = moment().format("YYYY-MM-DD HH:SS:MM")
