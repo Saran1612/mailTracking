@@ -23,7 +23,7 @@ app.get("/", async (req, res) => {
   var options = {
     root: path.join(__dirname),
   };
-  const current_time = moment().format("YYYY-MM-DD HH:SS:MM")
+  const current_time = moment().format("YYYY-MM-DD HH:mm:ss")
 console.log(current_time,"Check current date and time")
 
   var fileName = "rect.png";
@@ -59,8 +59,8 @@ console.log(current_time,"Check current date and time")
     let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME="${email}" and UQ_ID = "${UID}"`);
     console.log(AddedUserId, "Added userId");
     if(AddedUserId.length > 0){
-        const current_time = moment().format("YYYY-MM-DD HH:SS:MM")
-    console.log(current_time,"Check current date and time 2")
+      const current_time = moment().format("YYYY-MM-DD HH:mm:ss")
+      console.log(current_time,"Check current date and time")
     let AddedTimeStamp = await MysqlQueryExecute(`INSERT INTO Email_Tracking.TimeStamp(User_TimeStamp, user_id) VALUES('${current_time}', ${AddedUserId[0].UserId})`)
     }
     // }
