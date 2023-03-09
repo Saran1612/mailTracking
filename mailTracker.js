@@ -8,7 +8,6 @@ const MailSender = require("./mailSend");
 app.use(express.json());
 
 
-console.log(current_time,"Check current date and time")
 
 
 
@@ -25,6 +24,8 @@ app.get("/", async (req, res) => {
   var options = {
     root: path.join(__dirname),
   };
+  const current_time = moment().format("YYYY-MM-DD HH:SS:MM")
+console.log(current_time,"Check current date and time")
 
   var fileName = "rect.png";
   const timestamp = new Date().getTime();
@@ -36,35 +37,34 @@ app.get("/", async (req, res) => {
   console.log(subject, "subject");
   console.log(email, "email");
   console.log(UID, "uid");
-  let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = 180 and USER_NAME = "TEST"`;
+  let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = ${UID} and USER_NAME = "${email}"`;
   let FinalCount = await MysqlQueryExecute(countQuery);
   console.log(FinalCount, "message count");
   if (FinalCount[0].MESSAGECount !== 0) {
-    let IncrmentQuery = `UPDATE Email_Tracking.MAIL_USER SET Count = Count+1 WHERE UQ_ID = 1 and USER_NAME = "TEST"`;
-    let UserDataQuery = `Select ID as USERID from Email_Tracking.MAIL_USER where UQ_ID = 1 and USER_NAME = "TEST" `;
+    let IncrmentQuery = `UPDATE Email_Tracking.MAIL_USER SET Count = Count+1 WHERE UQ_ID = ${UID} and USER_NAME = "${email}"`;
+    let UserDataQuery = `Select ID as USERID from Email_Tracking.MAIL_USER where UQ_ID = ${UID} and USER_NAME = "${email}" `;
 
     
     let FinalResult = await MysqlQueryExecute(IncrmentQuery);
     console.log(FinalResult,"Check Final Count");
     let UserData = await MysqlQueryExecute(UserDataQuery);
-    // let InsertTime = await MysqlQueryExecute("INSERT INTO Email_Tracking.MAIL_USER")
     console.log(UserData[0].USERID,"Check User Data");
     if(UserData[0].USERID){
-      let current_time = moment().format("YYYY-MM-DD HH:mm:ss");
-      let InsertTime = await MysqlQueryExecute(`update  Email_Tracking.TimeStamp set User_TimeStamp='2023-03-08 12:40:48' where user_id = 1`);
+      let InsertTime = await MysqlQueryExecute(`update  Email_Tracking.TimeStamp set User_TimeStamp='${current_time}' where user_id = ${UserData[0].USERID}`);
 
     }
 
   }else{
+    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID, COUNT) VALUES("${email}",${UID},1)`);
 
-    let AddedUserId = await MysqlQueryExecute(`Select ID as USERID from Email_Tracking.MAIL_USER where UQ_ID = 480 and USER_NAME = "abhishek.poojary14@absyz.com"`);
-    console.log(AddedUserId,"Check with added user");
+    let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME="${email}" and UQ_ID = ${UID}`);
+    console.log(AddedUserId, "Added userId");
     if(AddedUserId.length > 0){
-      console.log("Inside Add Time");
-      let InsertTime = await MysqlQueryExecute(`Insert INTO Email_Tracking.TimeStamp(user_id) values(${AddedUserId[0].USERID})`);
-      console.log(InsertTime,"Inserted Time")
-
+        const current_time = moment().format("YYYY-MM-DD HH:SS:MM")
+    console.log(current_time,"Check current date and time 2")
+    let AddedTimeStamp = await MysqlQueryExecute(`INSERT INTO Email_Tracking.TimeStamp(User_TimeStamp, user_id) VALUES('${current_time}', ${AddedUserId[0].UserId})`)
     }
+    // }
   }
   res.sendFile(fileName, options, function async(err) {
     if (err) {
@@ -79,9 +79,8 @@ app.get("/test", (req, res, next) => {
   res.send("Testing");
 });
 
-app.post("/sendmail",(req,res,next)=>{
-  console.log("Inside sendmail")
-  console.log(req.body,"Request body");
+app.post("/sendmail",async(req,res,next)=>{
+ 
   
   // MailSender.MailSender(res,MysqlQueryExecute);
 })
