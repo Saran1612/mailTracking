@@ -37,9 +37,12 @@ app.get("/", async (req, res) => {
   console.log("Opened At", timestamp);
   let email = req.query.email;
   let UID = req.query.msgId;
-  console.log(req.query);
+  let subject = req.query.subject;
+  // console.log(req.query);
+  console.log(subject, "subject");
   console.log(email, "email");
   console.log(UID, "uid");
+  
   let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = 1 and USER_NAME = "TEST"`;
   let FinalCount = await MysqlQueryExecute(countQuery);
   // console.log(FinalCount, "message count");
