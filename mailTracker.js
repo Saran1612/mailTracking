@@ -4,7 +4,17 @@ const app = express();
 var moment = require("moment");
 const PORT = process.env.PORT || 3080;
 const db = require("./connection");
+const MailHandler = require("./maildataHandler")
+
+var cors = require('cors')
+var bodyParser = require("body-parser");
+
+
+app.use(cors())
 app.use(express.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 
 
@@ -54,7 +64,7 @@ console.log(current_time,"Check current date and time")
     }
 
   }else{
-    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID, COUNT) VALUES("${email}","${UID}",1)`);
+    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}","${subject}",1)`);
 
     let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME="${email}" and UQ_ID = "${UID}"`);
     console.log(AddedUserId, "Added userId");
@@ -74,8 +84,17 @@ console.log(current_time,"Check current date and time")
   });
 });
 
-app.get("/test", (req, res, next) => {
-  res.send("Testing");
+app.get("/MailData", async(req, res, next) => {
+  let Date = req.query.date;
+  console.log(req.query, "ate check")
+  // res.send({success: "success"});
+  var new_date = moment(Date, "YYYY-MM-DD").add(1, 'days').format("YYYY-MM-DD");
+  let AddedTimeStampData = await MysqlQueryExecute(`select * from Email_Tracking.TimeStamp INNER JOIN  Email_Tracking.MAIL_USER on Email_Tracking.TimeStamp.user_id = Email_Tracking.MAIL_USER.ID
+  where Email_Tracking.TimeStamp.User_TimeStamp >= "${Date}" and Email_Tracking.TimeStamp.User_TimeStamp < "${new_date}"`)
+  MailHandler.mailDataHandler(AddedTimeStampData, res);
+  // console.log(AddedTimeStamp,"AddedTimeStamp")
+  // res.send("Testing");
+
 });
 
 
