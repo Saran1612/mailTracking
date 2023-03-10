@@ -64,7 +64,8 @@ console.log(current_time,"Check current date and time")
     }
 
   }else{
-    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}",${subject},1)`);
+    console.log(subject,`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}","${subject}",1)`,"Test subject");
+    let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}","${subject}",1)`);
 
     let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME="${email}" and UQ_ID = "${UID}"`);
     console.log(AddedUserId, "Added userId");
