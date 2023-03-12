@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
   var options = {
     root: path.join(__dirname),
   };
-  const current_time = moment().format("YYYY-MM-DD HH:mm:ss")
+  const current_time = moment().utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss")
 console.log(current_time,"Check current date and time")
 
   var fileName = "rect.png";
@@ -57,20 +57,20 @@ console.log(current_time,"Check current date and time")
     let FinalResult = await MysqlQueryExecute(IncrmentQuery);
     console.log(FinalResult,"Check Final Count");
     let UserData = await MysqlQueryExecute(UserDataQuery);
-    console.log(UserData[0].USERID,"Check User Data");
+    // console.log(UserData[0].USERID,"Check User Data");
     if(UserData[0].USERID){
       let InsertTime = await MysqlQueryExecute(`update  Email_Tracking.TimeStamp set User_TimeStamp='${current_time}' where user_id = ${UserData[0].USERID}`);
 
     }
 
   }else{
-    console.log(subject,`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}","${subject}",1)`,"Test subject");
+    // console.log(subject,`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}","${subject}",1)`,"Test subject");
     let AddedUser = await MysqlQueryExecute(`INSERT INTO Email_Tracking.MAIL_USER(USER_NAME, UQ_ID,Mail_Subject, COUNT) VALUES("${email}","${UID}","${subject}",1)`);
 
     let AddedUserId = await MysqlQueryExecute(`Select ID as UserId from Email_Tracking.MAIL_USER where USER_NAME="${email}" and UQ_ID = "${UID}"`);
     console.log(AddedUserId, "Added userId");
     if(AddedUserId.length > 0){
-      const current_time = moment().format("YYYY-MM-DD HH:mm:ss")
+      const current_time = moment().utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss")
       console.log(current_time,"Check current date and time")
     let AddedTimeStamp = await MysqlQueryExecute(`INSERT INTO Email_Tracking.TimeStamp(User_TimeStamp, user_id) VALUES('${current_time}', ${AddedUserId[0].UserId})`)
     }
@@ -91,11 +91,7 @@ app.get("/MailData", async(req, res, next) => {
   let AddedTimeStampData = await MysqlQueryExecute(`select * from Email_Tracking.TimeStamp INNER JOIN  Email_Tracking.MAIL_USER on Email_Tracking.TimeStamp.user_id = Email_Tracking.MAIL_USER.ID
   where Email_Tracking.TimeStamp.User_TimeStamp >= "${Date}" and Email_Tracking.TimeStamp.User_TimeStamp < "${new_date}"`)
   MailHandler.mailDataHandler(AddedTimeStampData, res);
-
-
 });
-
-
 
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
