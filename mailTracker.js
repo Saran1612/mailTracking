@@ -95,7 +95,7 @@ app.get("/MailData", async(req, res, next) => {
   var new_date = moment(Date, "YYYY-MM-DD").add(1, 'days').format("YYYY-MM-DD");
   let AddedTimeStampData = await MysqlQueryExecute(`select * from Email_Tracking.TimeStamp INNER JOIN  Email_Tracking.MAIL_USER on Email_Tracking.TimeStamp.user_id = Email_Tracking.MAIL_USER.ID
   where Email_Tracking.TimeStamp.User_TimeStamp >= "${Date}" and Email_Tracking.TimeStamp.User_TimeStamp < "${new_date}"`)
-  MailHandler.mailDataHandler(AddedTimeStampData, res);
+  MailHandler.mailDataHandler(AddedTimeStampData, res, moment);
 });
 
 app.listen(PORT, function (err) {

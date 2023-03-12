@@ -16,10 +16,12 @@ const moment = require("moment")
         let FinalData = Data.filter(data => data.Mail_Subject === IndIndex).map((filtreddata,index)=>{
             // if(data.Mail_Subject === IndIndex){
                 selectedindex.push(index); 
+                let UtcDate = moment(filtreddata.User_TimeStamp);
+                var dateWithTimezone = UtcDate.tz('Asia/Calcutta|Asia/Kolkata').format("YYYY-MM-DD HH:mm:ss");
                 return{
                     Mail: filtreddata.Mail_Subject,
                     UserName:filtreddata.USER_NAME,
-                    UserOpendTime: filtreddata.User_TimeStamp,
+                    UserOpendTime: dateWithTimezone,
                     Count: filtreddata.Count
                 // }
             }
