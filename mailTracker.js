@@ -10,7 +10,7 @@ const MailHandler = require("./maildataHandler")
 var cors = require('cors')
 var bodyParser = require("body-parser");
 // moment.tz.setDefault("Asia/Calcutta|Asia/Kolkata");
-moment.tz.setDefault("Asia/Calcutta|Asia/Kolkata");
+moment.tz.setDefault("Asia/Kolkata");
 
 const current_time = moment.tz('Asia/Calcutta|Asia/Kolkata').format("YYYY-MM-DD HH:mm:ss")
 console.log(current_time,"Check current date and time")
