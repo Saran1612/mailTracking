@@ -48,10 +48,13 @@ app.get("/", async (req, res) => {
   let email = req.query.email;
   let UID = req.query.msgId;
   let subject = req.query.subject;
+  let recipents = req.query.recipient;
+
   // console.log(req.query);
   // console.log(req,"requestANSWER");
   // console.log(res,"responseANSWER");
 
+  console.log(recipents,"recipents");
   console.log(subject, "subject");
   console.log(email, "email");
   // console.log(UID, "uid");
