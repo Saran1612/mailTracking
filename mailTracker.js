@@ -103,6 +103,13 @@ app.get("/MailData", async(req, res, next) => {
   MailHandler.mailDataHandler(AddedTimeStampData, res, moment);
 });
 
+
+app.get('/script', (req, res) => {
+  const script = '<script>alert("Hello, world!");</script>';
+  res.send(script);
+});
+
+
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
 });
