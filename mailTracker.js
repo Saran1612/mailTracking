@@ -48,12 +48,14 @@ app.get("/", async (req, res) => {
   let email = req.query.email;
   let UID = req.query.msgId;
   let subject = req.query.subject;
+  const userEmail = req.headers['x-user-email'];
+  console.log(`User email address is: ${userEmail}`);
   // console.log(req.query);
   // console.log(req,"requestANSWER");
   // console.log(res,"responseANSWER");
 
-  console.log(subject, "subject");
-  console.log(email, "email");
+  // console.log(subject, "subject");
+  // console.log(email, "email");
   // console.log(UID, "uid");
   let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = "${UID}" and USER_NAME = "${email}"`;
   let FinalCount = await MysqlQueryExecute(countQuery);
