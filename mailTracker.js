@@ -49,6 +49,8 @@ app.get("/", async (req, res) => {
   let UID = req.query.msgId;
   let subject = req.query.subject;
   let recipents = req.query.recipient;
+  const uniqueId = req.query.uniqueId;
+  const recipientId = req.query.recipientId;
 
   // console.log(req.query);
   // console.log(req,"requestANSWER");
@@ -56,6 +58,8 @@ app.get("/", async (req, res) => {
 
   console.log(recipents,"recipents");
   console.log(subject, "subject");
+  console.log(uniqueId,"uniqueId");
+  console.log(recipientId, "recipientId");
 
   // console.log(UID, "uid");
   let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = "${UID}" and USER_NAME = "${email}"`;
