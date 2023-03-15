@@ -51,8 +51,8 @@ app.get("/", async (req, res) => {
   const uniqueId = req.query.uniqueId;
   const recipientId = req.query.recipientId;
 
-  // console.log(recipents,"recipents");
-  console.log(req, "subject");
+  console.log(email,"email");
+  // console.log(req, "subject");
   // console.log(uniqueId, "uniqueId");
   // console.log(recipientId, "recipientId");
 
