@@ -50,7 +50,7 @@ app.get("/", async (req, res) => {
   let recipents = req.query.recipient;
   const uniqueId = req.query.uniqueId;
   const recipientId = req.query.recipientId;
-  let senderEmail = req.header.from;
+  let senderEmail = req.headers.from;
   console.log(senderEmail,"senderEmail");
 
   console.log(email,"email");
