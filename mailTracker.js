@@ -52,7 +52,7 @@ app.get("/", async (req, res) => {
   const recipientId = req.query.recipientId;
 
   console.log(email,"email");
-  console.log(req, "subject");
+  // console.log(req, "subject");
   console.log(UID, "UID");
 
   // console.log(UID, "uid");
