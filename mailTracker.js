@@ -55,7 +55,7 @@ app.get("/", async (req, res) => {
 
   console.log(email,"email");
   console.log(req, "subject");
-  // console.log(UID, "UID");
+  console.log(res, "response");
 
   // console.log(UID, "uid");
   let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = "${UID}" and USER_NAME = "${email}"`;
