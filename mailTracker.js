@@ -50,10 +50,12 @@ app.get("/", async (req, res) => {
   let recipents = req.query.recipient;
   const uniqueId = req.query.uniqueId;
   const recipientId = req.query.recipientId;
+  let senderEmail = req.header.from;
+  console.log(senderEmail,"senderEmail");
 
   console.log(email,"email");
   // console.log(req, "subject");
-  console.log(UID, "UID");
+  // console.log(UID, "UID");
 
   // console.log(UID, "uid");
   let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = "${UID}" and USER_NAME = "${email}"`;
