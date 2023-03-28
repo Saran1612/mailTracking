@@ -53,9 +53,9 @@ app.get("/", async (req, res) => {
   let senderEmail = req.headers;
   // console.log(senderEmail,"senderEmail");
 
-  console.log(email,"email");
-  console.log(req, "URL");
-  console.log(res, "response");
+  console.log(email, "email");
+  // console.log(req, "URL");
+  // console.log(res, "response");
 
   // console.log(UID, "uid");
   let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = "${UID}" and USER_NAME = "${email}"`;
@@ -95,11 +95,11 @@ app.get("/", async (req, res) => {
     }
     // }
   }
-  res.set('Content-Type', 'image/png');
+  res.set("Content-Type", "image/png");
   // Set the cache control headers to prevent caching
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', '0');
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
   res.sendFile(fileName, options, function async(err) {
     if (err) {
       // next(err);
