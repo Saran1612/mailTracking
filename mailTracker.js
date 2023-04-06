@@ -33,9 +33,9 @@ async function MysqlQueryExecute(query1) {
 }
 
 app.get("/", async (req, res) => {
-  // var options = {
-  //   root: path.join(__dirname),
-  // };
+  var options = {
+    root: path.join(__dirname),
+  };
   // const current_time = moment()
   //   .tz("Asia/Kolkata")
   //   .format("YYYY-MM-DD HH:mm:ss");
