@@ -6,7 +6,7 @@ var moment = require("moment-timezone");
 const PORT = process.env.PORT || 3080;
 const db = require("./connection");
 const MailHandler = require("./maildataHandler");
-
+const fs = require("fs");
 var cors = require("cors");
 var bodyParser = require("body-parser");
 // moment.tz.setDefault("Asia/Calcutta|Asia/Kolkata");
