@@ -23,6 +23,16 @@ app.use(
   })
 );
 
+
+// Create a write stream to the log file
+const logStream = fs.createWriteStream('/var/log/mailtrack.log', { flags: 'a' });
+
+// Write a message to the log file
+logStream.write('New log message\n');
+
+// Close the log stream
+logStream.end();
+
 // let sql = `INSERT INTO Email_Tracking.MAIL_USER(USER_NAME,UQ_ID)
 //            VALUES('Test 2',4)`;
 // let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = 1`;
