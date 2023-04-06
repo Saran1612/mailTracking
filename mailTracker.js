@@ -41,7 +41,7 @@ app.get("/", async (req, res) => {
   //   .format("YYYY-MM-DD HH:mm:ss");
   // // console.log(current_time,"Check current date and time")
 
-  // var fileName = "rect.png";
+  var fileName = "rect.png";
   // const timestamp = new Date().getTime();
   // // console.log("Opened At", timestamp);
   // let email = req.query.email;
