@@ -100,11 +100,11 @@ app.get("/", async (req, res) => {
     }
     // }
   }
-  // res.set("Content-Type", "image/png");
-  // // Set the cache control headers to prevent caching
-  // res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  // res.set("Pragma", "no-cache");
-  // res.set("Expires", "0");
+  res.set("Content-Type", "image/png");
+  // Set the cache control headers to prevent caching
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
   res.sendFile(fileName, options, function async(err) {
     if (err) {
       // next(err);
@@ -114,39 +114,10 @@ app.get("/", async (req, res) => {
   });
 
   
-fs.readFile('/var/log/mailtrack.log', 'utf-8', (err, data) => {
-  if (err) {
-    console.error(err, "error while reading the file");
-    return;
-  }
 
-  // Parse the log file data
-  const logs = data.split('\n');
-  console.log(logs, "Check logs");
-
-  for (let i = 0; i < logs.length; i++) {
-    const log = logs[i];
-    const [ip, date, userAgent, email] = log.split(' ');
-
-    // Do something with the IP, date, user-agent, and email
-    console.log(`${email} opened the email on ${date} using ${userAgent}. IP: ${ip}`);
-  }
-});
 });
 
-app.get("/MailData", async (req, res, next) => {
-  let Date = req.query.date;
-  var new_date = moment(Date, "YYYY-MM-DD").add(1, "days").format("YYYY-MM-DD");
-  let AddedTimeStampData = await MysqlQueryExecute(`
-  select * from Email_Tracking.TimeStamp INNER JOIN  Email_Tracking.MAIL_USER on Email_Tracking.TimeStamp.user_id = Email_Tracking.MAIL_USER.ID
-  where Email_Tracking.TimeStamp.User_TimeStamp >= "${Date}" and Email_Tracking.TimeStamp.User_TimeStamp < "${new_date}"`);
-  MailHandler.mailDataHandler(AddedTimeStampData, res, moment);
-});
 
-app.get("/script", (req, res) => {
-  const script = '<script>alert("Hello, world!");</script>';
-  res.send(script);
-});
 
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
