@@ -120,7 +120,8 @@ app.get("/", async (req, res) => {
 app.get("/trackLink", async (req, res) => {
   let url = req.query.url;
   let email = req.query.email;
-  console.log(email,url, "Check url");
+  console.log(email, "Check email");
+  console.log(url, "Check url");
   if(url){
   res.redirect(url);
   }
