@@ -117,7 +117,11 @@ app.get("/", async (req, res) => {
 
 });
 
-
+app.get("/trackLink", async (req, res) => {
+  let email = req.query.url;
+  console.log(url, "Check url");
+  res.redirect(url);
+})
 
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
