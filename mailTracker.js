@@ -3,7 +3,7 @@ const path = require("path");
 const app = express();
 // var moment = require("moment");
 var moment = require("moment-timezone");
-const PORT = process.env.PORT || 3080;
+const PORT = process.env.PORT || 4000;
 const db = require("./connection");
 const MailHandler = require("./maildataHandler");
 const fs = require("fs");
@@ -119,8 +119,8 @@ app.get("/", async (req, res) => {
 
 app.get("/trackLink", async (req, res) => {
   let email = req.query.url;
-  console.log(url, "Check url");
-  res.redirect(url);
+  console.log(email, "Check url");
+  res.redirect(email);
 })
 
 app.listen(PORT, function (err) {
