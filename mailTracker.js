@@ -123,7 +123,7 @@ app.get("/trackLink", async (req, res) => {
   console.log(email, "Check email");
   console.log(url, "Check url");
   if(url){
-  res.redirect(url[1]);
+  res.redirect(url);
   }
 })
 
