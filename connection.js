@@ -1,11 +1,13 @@
 var mysql = require("mysql2");
 
 const pool = mysql.createPool({
-  host: "emailtracking.cdqjtuktl4ej.ap-northeast-1.rds.amazonaws.com",
-  user: "admin",
-  password: "Poojary123",
+  host: "ec2-3-82-89-135.compute-1.amazonaws.com",
+  user: "root",
+  password: "wUYWJhAufS5gkTJ",
   port: "3306",
 });
+
+// "EmailTracking1"
 
 
 module.exports = pool.promise();
