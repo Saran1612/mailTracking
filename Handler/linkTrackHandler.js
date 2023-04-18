@@ -4,10 +4,19 @@ const moment = require("moment");
 const path = require("path");
 
 const TrackLinkHandler = async (req, res, next) => {
+    let url = req.query.url;
+  let email = req.query.email;
+  let UID = req.query.msgId;
+  let subject = req.query.subject;
+  console.log(email, "Check email");
+  console.log(url, "Check url");
+  if(url){
+  res.redirect(url);
+  }
   try {
-    let email = req.query.email;
-    let UID = req.query.msgId;
-    let subject = req.query.subject;
+    // let email = req.query.email;
+    
+    // let subject = req.query.subject;
     console.log(email, UID, subject, "check final query params");
     const [MessageCount] =
       await MysqlQueryExecute(`Select COUNT(*) as TrackerCount from absyz_email_track.Mail_Message INNER JOIN 
@@ -24,10 +33,11 @@ const TrackLinkHandler = async (req, res, next) => {
         const CreateMessage = await MysqlQueryExecute(
           `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key) VALUES (${recipientResult.insertId}, "${subject}", ${UID})`
         );
-        const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
-        const TrackerData = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Tracker (user_id, message_id, Time_Stamp, Count) VALUES(${recipientResult.insertId}, ${CreateMessage.insertId}, "${currentDateTimeString}", 1)`
-        );
+        const LinkData = await MysqlQueryExecute(`
+            INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id, Count ) 
+            VALUES ("${url}", ${recipientResult.insertId}, ${CreateMessage.insertId}, 1)
+        `);
+        
       } else {
         const [recipientResult] = await MysqlQueryExecute(
           `Select Recipient_id as RecipientsId from absyz_email_track.Recipient_Details where RecipientEmail = "${email}"`
@@ -36,40 +46,25 @@ const TrackLinkHandler = async (req, res, next) => {
         const CreateMessage = await MysqlQueryExecute(
           `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key) VALUES (${recipientResult.RecipientsId}, "${subject}", ${UID})`
         );
-        console.log(CreateMessage.insertId, "Check created Message");
-        const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
-        console.log(currentDateTimeString, "currentDateTimeString");
-        const TrackerData = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Tracker (user_id, message_id, Time_Stamp, Count) VALUES(${recipientResult.RecipientsId}, ${CreateMessage.insertId}, "${currentDateTimeString}", 1)`
-        );
+        const LinkData = await MysqlQueryExecute(`
+            INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id, Count) 
+            VALUES ("${url}", ${recipientResult.RecipientsId}, ${CreateMessage.insertId}, 1)
+        `);
+        
       }
     } else {
       const TrackerCountInc =
-        await MysqlQueryExecute(`UPDATE absyz_email_track.Tracker
+        await MysqlQueryExecute(`UPDATE absyz_email_track.LinkTracker
   INNER JOIN absyz_email_track.Recipient_Details ON absyz_email_track.Recipient_Details.Recipient_id = 
-  absyz_email_track.Tracker.user_id AND absyz_email_track.Recipient_Details.RecipientEmail = "${email}"
+  absyz_email_track.LinkTracker.user_id AND absyz_email_track.Recipient_Details.RecipientEmail = "${email}"
   INNER JOIN absyz_email_track.Mail_Message ON absyz_email_track.Mail_Message.MessageId = 
-  absyz_email_track.Tracker.message_id AND absyz_email_track.Mail_Message.Message_Unique_Key = ${UID}
-  SET absyz_email_track.Tracker.Count = absyz_email_track.Tracker.Count + 1;
+  absyz_email_track.LinkTracker.message_id AND absyz_email_track.Mail_Message.Message_Unique_Key = ${UID}
+  SET absyz_email_track.LinkTracker.Count = absyz_email_track.LinkTracker.Count + 1
+  WHERE absyz_email_track.LinkTracker.Link = "${url}";
   `);
     }
-    var fileName = "rect.png";
-    var options = {
-      root: path.join(__dirname, ".."),
-    };
-    res.set("Content-Type", "image/png");
-    // Set the cache control headers to prevent caching
-    res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-    res.set("Pragma", "no-cache");
-    res.set("Expires", "0");
-    res.sendFile(fileName, options, function async(err) {
-      if (err) {
-        // next(err);
-        console.log(err);
-      } else {
-        console.log("Sent:", fileName);
-      }
-    });
+   
+    
   } catch (error) {
     console.log(error, "Checking error");
   }

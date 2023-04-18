@@ -32,11 +32,7 @@ app.use("/", MainRoute);
 // let sql = `INSERT INTO Email_Tracking.MAIL_USER(USER_NAME,UQ_ID)
 //            VALUES('Test 2',4)`;
 // let countQuery = `SELECT COUNT(UQ_ID) AS MESSAGECount FROM Email_Tracking.MAIL_USER WHERE UQ_ID = 1`;
-async function MysqlQueryExecute(query1) {
-  let finalresult = [];
-  const [result] = await db.execute(query1);
-  return result;
-}
+
 
 // app.get("/", async (req, res) => {
 //   var options = {
