@@ -22,7 +22,7 @@ const TrackPixelHandler = async (req, res, next) => {
           `INSERT INTO absyz_email_track.Recipient_Details (RecipientEmail) VALUES ("${email}")`
         );
         const CreateMessage = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.insertId}, "${subject}", ${UID}, "${currentDateTimeString}")`
+          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.insertId}, "${subject}", "${UID}", "${currentDateTimeString}")`
         );
         
         const TrackerData = await MysqlQueryExecute(
@@ -36,7 +36,7 @@ const TrackPixelHandler = async (req, res, next) => {
         const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
         console.log(currentDateTimeString, "currentDateTimeString");
         const CreateMessage = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${subject}", ${UID}, "${currentDateTimeString}")`
+          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${subject}", "${UID}", "${currentDateTimeString}")`
         );
         console.log(CreateMessage.insertId, "Check created Message");
         

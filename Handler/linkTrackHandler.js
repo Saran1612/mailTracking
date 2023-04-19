@@ -33,7 +33,7 @@ const TrackLinkHandler = async (req, res, next) => {
         );
         const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
         const CreateMessage = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.insertId}, "${subject}", ${UID}, "${currentDateTimeString}")`
+          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.insertId}, "${subject}", "${UID}", "${currentDateTimeString}")`
         );
         const LinkData = await MysqlQueryExecute(`
             INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id, Count ) 
@@ -47,7 +47,7 @@ const TrackLinkHandler = async (req, res, next) => {
         console.log(recipientResult.RecipientsId, "Check recp");
         const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
         const CreateMessage = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${subject}", ${UID}, "${currentDateTimeString}")`
+          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${subject}", "${UID}", "${currentDateTimeString}")`
         );
         const LinkData = await MysqlQueryExecute(`
             INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id, Count) 
