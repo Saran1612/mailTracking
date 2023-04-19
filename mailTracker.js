@@ -126,7 +126,7 @@ app.get("/trackLink", async (req, res) => {
   }
 })
 
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello World, from express');
 });
 
