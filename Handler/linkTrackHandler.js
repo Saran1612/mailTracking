@@ -27,11 +27,13 @@ const TrackLinkHandler = async (req, res, next) => {
       let countQuery = `SELECT Recipient_id ,COUNT(Recipient_id) AS RecipientCount FROM absyz_email_track.Recipient_Details WHERE  RecipientEmail = "${email}"`;
       let Recipient_Data = await MysqlQueryExecute(countQuery);
       if (Recipient_Data[0].RecipientCount === 0) {
+
         const recipientResult = await MysqlQueryExecute(
           `INSERT INTO absyz_email_track.Recipient_Details (RecipientEmail) VALUES ("${email}")`
         );
+        const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
         const CreateMessage = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key) VALUES (${recipientResult.insertId}, "${subject}", ${UID})`
+          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.insertId}, "${subject}", ${UID}, "${currentDateTimeString}")`
         );
         const LinkData = await MysqlQueryExecute(`
             INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id, Count ) 
@@ -43,8 +45,9 @@ const TrackLinkHandler = async (req, res, next) => {
           `Select Recipient_id as RecipientsId from absyz_email_track.Recipient_Details where RecipientEmail = "${email}"`
         );
         console.log(recipientResult.RecipientsId, "Check recp");
+        const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
         const CreateMessage = await MysqlQueryExecute(
-          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key) VALUES (${recipientResult.RecipientsId}, "${subject}", ${UID})`
+          `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${subject}", ${UID}, "${currentDateTimeString}")`
         );
         const LinkData = await MysqlQueryExecute(`
             INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id, Count) 

@@ -3,9 +3,17 @@ const router=express.Router();
 const CreateRecipientandMessage = require("../Handler/createRecipient")
 const TrackPixelHandler = require("../Handler/trackingPixelHandler")
 const TrackLinkHandler = require("../Handler/linkTrackHandler")
+const GetMessageHandler = require("../Handler/messageHandler")
+const recipientDataHandler = require("../Handler/recipientHandler");
+
+
+/***All the routes */
 router.post("/RecipientDetails",CreateRecipientandMessage);
 router.get("/TrackingPixel", TrackPixelHandler);
 router.get("/TrackLink", TrackLinkHandler);
+router.get("/GetMessageByDate", GetMessageHandler);
+router.get("/GetRecipients", recipientDataHandler)
+
   
 // Importing the router
 module.exports=router
