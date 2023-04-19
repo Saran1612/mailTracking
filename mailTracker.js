@@ -126,6 +126,10 @@ app.get("/trackLink", async (req, res) => {
   }
 })
 
+app.get('/test', (req, res) => {
+  res.send('Hello World, from express');
+});
+
 app.listen(PORT, function (err) {
   console.log(`server started on port ${PORT}`);
 });
