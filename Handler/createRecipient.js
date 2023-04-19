@@ -57,8 +57,10 @@ for (const item of RecipientData) {
         `);
         
         }
+        res.send({message: "Recipient Created Sucessfully"});
     }catch(error){
         console.log(error, "Error while inserting data onto exesting Recipient");
+        res.send({message: "Recipient Not Created"});
     }
 
   }
