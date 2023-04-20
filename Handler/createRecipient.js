@@ -5,6 +5,7 @@ const moment = require('moment');
 const CreateRecipientandMessage = async (req, res, next)=>{
 console.log(req.body, "Check body final");
 const RecipientData = req.body;
+let createdRecipient = false;
 for (const item of RecipientData) {
     let countQuery = `SELECT Recipient_id ,COUNT(Recipient_id) AS RecipientCount FROM absyz_email_track.Recipient_Details WHERE  RecipientEmail = "${item.email}"`;
   let Recipient_Data = await MysqlQueryExecute(countQuery);
@@ -28,12 +29,14 @@ for (const item of RecipientData) {
             VALUES 
                 ${item.links.map(link => `('${link}', ${recipientResult.insertId}, ${CreateMessage.insertId})`).join(',')}
         `);
+        createdRecipient = true;
         
         }
 
     }catch(error){
         console.log(error, "Error while create Recipientcddc");
         // await MysqlQueryExecute('ROLLBACK');
+        createdRecipient = false;
     }
   }
   else{
@@ -56,17 +59,24 @@ for (const item of RecipientData) {
             VALUES 
                 ${item.links.map(link => `('${link}', ${recipientResult.RecipientsId}, ${CreateMessage.insertId})`).join(',')}
         `);
+        createdRecipient = true;
         
         }
-        res.send({message: "Recipient Created Sucessfully"});
+       
     }catch(error){
+      createdRecipient = false;
         console.log(error, "Error while inserting data onto exesting Recipient");
-        res.send({message: "Recipient Not Created"});
+        // res.send({message: "Recipient Not Created"});
     }
 
   }
   
   }
+  if (createdRecipient) {
+    res.send({message: "Recipient Created Successfully"});
+} else {
+    res.send({message: "Recipient Not Created"});
+}
 } 
 
 module.exports = CreateRecipientandMessage;
