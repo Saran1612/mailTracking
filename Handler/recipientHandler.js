@@ -14,7 +14,7 @@ const recipientDataHandler = async (req, res, next) => {
    absyz_email_track.Recipient_Details
    INNER JOIN absyz_email_track.Mail_Message 
      ON absyz_email_track.Mail_Message.User_Id = absyz_email_track.Recipient_Details.Recipient_id
-       AND absyz_email_track.Mail_Message.Message_Unique_Key = ${MessageKey}
+       AND absyz_email_track.Mail_Message.Message_Unique_Key = "${MessageKey}"
    INNER JOIN absyz_email_track.Tracker 
      ON absyz_email_track.Tracker.user_id = absyz_email_track.Recipient_Details.Recipient_id
        AND absyz_email_track.Tracker.message_id = absyz_email_track.Mail_Message.MessageId
