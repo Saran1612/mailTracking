@@ -42,6 +42,7 @@ for (const item of RecipientData) {
         `Select Recipient_id as RecipientsId from absyz_email_track.Recipient_Details where RecipientEmail = "${item.email}"`,
         
       );
+      
       const currentDateTimeString = moment().format('YYYY-MM-DD HH:mm:ss');
           console.log(currentDateTimeString,"currentDateTimeString")
       console.log(recipientResult.RecipientsId, "Check recp") ;
@@ -53,7 +54,7 @@ for (const item of RecipientData) {
             const LinkData = await MysqlQueryExecute(`
             INSERT INTO absyz_email_track.LinkTracker (Link, user_id, message_id) 
             VALUES 
-                ${item.links.map(link => `('${link}', ${recipientResult.insertId}, ${CreateMessage.insertId})`).join(',')}
+                ${item.links.map(link => `('${link}', ${recipientResult.RecipientsId}, ${CreateMessage.insertId})`).join(',')}
         `);
         
         }
