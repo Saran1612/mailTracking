@@ -2,6 +2,9 @@
 const MysqlQueryExecute = require("../DB_Execute/DB_Connection");
 const moment = require("moment");
 const path = require("path");
+const NodeCache = require("node-cache");
+
+const cache = new NodeCache();
 
 const TrackLinkHandler = async (req, res, next) => {
     let url = req.query.url;
@@ -10,6 +13,11 @@ const TrackLinkHandler = async (req, res, next) => {
   let subject = req.query.subject;
   console.log(email, "Check email");
   console.log(url, "Check url");
+  const cacheKey = `${email}-${UID}-${url}`;
+  const cachedResponse = cache.get(cacheKey);
+  if (cachedResponse) {
+    return res.send(cachedResponse);
+  }
   if(url){
   res.redirect(url);
   }
