@@ -107,7 +107,7 @@ const emailContent = fs.readFileSync('email-template.html', 'utf-8');
 
 // Read the list of email addresses from a CSV file
 const emailList = fs.readFileSync('email-list.csv', 'utf-8').split('\n');
-console.log(emailList,"Check email list");
+// console.log(emailList,"Check email list");
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',

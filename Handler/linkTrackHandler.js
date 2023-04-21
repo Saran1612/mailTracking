@@ -52,7 +52,7 @@ const TrackLinkHandler = async (req, res, next) => {
         const [recipientResult] = await MysqlQueryExecute(
           `Select Recipient_id as RecipientsId from absyz_email_track.Recipient_Details where RecipientEmail = "${email}"`
         );
-        console.log(recipientResult.RecipientsId, "Check recp");
+        // console.log(recipientResult.RecipientsId, "Check recp");
         const currentDateTimeString = moment().format("YYYY-MM-DD HH:mm:ss");
         const CreateMessage = await MysqlQueryExecute(
           `INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${subject}", "${UID}", "${currentDateTimeString}")`

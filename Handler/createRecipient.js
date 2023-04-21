@@ -104,7 +104,7 @@ const CreateRecipientandMessage = async (req, res, next)=>{
     for (const item of RecipientData) {
       let countQuery = `SELECT Recipient_id ,COUNT(Recipient_id) AS RecipientCount FROM absyz_email_track.Recipient_Details WHERE  RecipientEmail = "${item.email}"`;
       let Recipient_Data = await MysqlQueryExecute(countQuery);
-      console.log(Recipient_Data,"Final Count Check");
+      // console.log(Recipient_Data,"Final Count Check");
       if(Recipient_Data[0].RecipientCount === 0){
         // try{
         const recipientResult = await MysqlQueryExecute(
