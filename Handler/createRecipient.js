@@ -96,7 +96,7 @@ const moment = require('moment');
 
 
 const CreateRecipientandMessage = async (req, res, next)=>{
-  console.log(req.body, "Check body final");
+  // console.log(req.body, "Check body final");
   const RecipientData = req.body;
   let createdRecipient = false;
   try{

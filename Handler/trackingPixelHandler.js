@@ -7,7 +7,7 @@ const TrackPixelHandler = async (req, res, next) => {
     let email = req.query.email;
     let UID = req.query.msgId;
     let subject = req.query.subject;
-    console.log(email, UID, subject, "check final query params");
+    // console.log(email, UID, subject, "check final query params");
     const [MessageCount] =
       await MysqlQueryExecute(`Select COUNT(*) as TrackerCount from absyz_email_track.Mail_Message INNER JOIN 
       absyz_email_track.Recipient_Details ON absyz_email_track.Recipient_Details.RecipientEmail = "${email}" 
