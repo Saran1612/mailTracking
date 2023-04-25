@@ -18,9 +18,13 @@ const TrackLinkHandler = async (req, res, next) => {
   if (cachedResponse) {
     return res.send(cachedResponse);
   }
+  try{
   if(url){
   res.redirect(url);
   }
+}catch(error){
+  console.log(error,"Check error finale");
+}
   try {
     // let email = req.query.email;
     
