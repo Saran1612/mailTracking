@@ -2,8 +2,9 @@ const Incominrequet = async(req,res,next)=>{
     try{
     const userAgent = req.headers['user-agent'];
     const isFromGmail = userAgent.includes('GmailImageProxy');
-    console.log(userAgent,isFromGmail,"Test is from gmail");
-    if (isFromGmail) {
+    const isFromGoogleImageProxy = userAgent.includes('GoogleImageProxy');
+    console.log(userAgent,isFromGmail,isFromGoogleImageProxy,"Test is from gmail");
+    if (isFromGmail || isFromGoogleImageProxy) {
         next();
       }else{
         res.status(500).send("Bad Request");
