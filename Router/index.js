@@ -13,7 +13,7 @@ const IncominRequestHelper = require("../Helper/reqHelper")
 /***All the routes */
 router.post("/RecipientDetails",CreateRecipientandMessage);
 router.get("/TrackingPixel",IncominRequestHelper, TrackPixelHandler);
-router.get("/TrackLink",IncominRequestHelper, TrackLinkHandler);
+router.get("/TrackLink", TrackLinkHandler);
 router.get("/GetMessageByDate", GetMessageHandler);
 router.get("/GetRecipients", recipientDataHandler);
 router.get("/getTrackerLinkData",linkTrackHandler);

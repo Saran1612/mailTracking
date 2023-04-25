@@ -3,7 +3,7 @@ const Incominrequet = async(req,res,next)=>{
     const userAgent = req.headers['user-agent'];
     const isFromGmail = userAgent.includes('GmailImageProxy');
     const isFromGoogleImageProxy = userAgent.includes('GoogleImageProxy');
-    console.log(userAgent,isFromGmail,isFromGoogleImageProxy,req.query.extsrc,req.query['gx-context'],"Test is from gmail");
+    console.log(userAgent,isFromGmail,isFromGoogleImageProxy,"Test is from gmail");
     if (isFromGmail || isFromGoogleImageProxy) {
         next();
       }else{
