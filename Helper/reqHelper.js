@@ -2,6 +2,7 @@ const Incominrequet = async(req,res,next)=>{
     try{
     const userAgent = req.headers['user-agent'];
     const isFromGmail = userAgent.includes('GmailImageProxy');
+    console.log(userAgent,isFromGmail,"Test is from gmail");
     if (isFromGmail) {
         next();
       }else{
