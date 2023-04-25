@@ -11,6 +11,8 @@ const TrackLinkHandler = async (req, res, next) => {
   let email = req.query.email;
   let UID = req.query.msgId;
   let subject = req.query.subject;
+  const userAgent = req.headers['user-agent'];
+  console.log(userAgent,"Check user Agent");
   console.log(email, "Check email");
   console.log(url, "Check url");
   const cacheKey = `${email}-${UID}-${url}`;

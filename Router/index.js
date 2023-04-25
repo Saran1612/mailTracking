@@ -7,21 +7,16 @@ const GetMessageHandler = require("../Handler/messageHandler")
 const recipientDataHandler = require("../Handler/recipientHandler");
 const linkTrackHandler = require("../Handler/linkTrackDataHandler");
 const rateLimit = require("express-rate-limit");
-
-// Set up rate limiter
-const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 10, // limit each IP to 10 requests per windowMs
-});
+const IncominRequestHelper = require("../Helper/reqHelper")
 
 
 /***All the routes */
-router.post("/RecipientDetails",CreateRecipientandMessage);
-router.get("/TrackingPixel", TrackPixelHandler);
-router.get("/TrackLink",limiter, TrackLinkHandler);
+router.post("/RecipientDetails",IncominRequestHelper,CreateRecipientandMessage);
+router.get("/TrackingPixel",IncominRequestHelper, TrackPixelHandler);
+router.get("/TrackLink",IncominRequestHelper, TrackLinkHandler);
 router.get("/GetMessageByDate", GetMessageHandler);
 router.get("/GetRecipients", recipientDataHandler);
-router.get("/getTrackerLinkData",linkTrackHandler )
+router.get("/getTrackerLinkData",linkTrackHandler);
 
   
 // Importing the router
