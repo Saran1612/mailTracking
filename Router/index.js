@@ -7,7 +7,8 @@ const GetMessageHandler = require("../Handler/messageHandler")
 const recipientDataHandler = require("../Handler/recipientHandler");
 const linkTrackHandler = require("../Handler/linkTrackDataHandler");
 const rateLimit = require("express-rate-limit");
-const IncominRequestHelper = require("../Helper/reqHelper")
+const IncominRequestHelper = require("../Helper/reqHelper");
+const getSender = require("../Handler/sender")
 
 
 /***All the routes */
@@ -17,6 +18,7 @@ router.get("/TrackLink", TrackLinkHandler);
 router.get("/GetMessageByDate", GetMessageHandler);
 router.get("/GetRecipients", recipientDataHandler);
 router.get("/getTrackerLinkData",linkTrackHandler);
+router.get("/getSenderDetails",getSender);
 
   
 // Importing the router
