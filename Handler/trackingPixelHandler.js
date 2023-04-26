@@ -45,10 +45,8 @@ const TrackPixelHandler = async (req, res, next) => {
     //     );
     //   }
     } else {
-      const userAgent = req.headers['user-agent'];
-      const isFromGmail = userAgent.includes('GmailImageProxy');
-      if (isFromGmail) {
-
+     
+      console.log(email,UID ,"Inside else")
       const TrackerCountInc =
         await MysqlQueryExecute(`UPDATE absyz_email_track.Tracker
   INNER JOIN absyz_email_track.Recipient_Details ON absyz_email_track.Recipient_Details.Recipient_id = 
@@ -75,7 +73,7 @@ const TrackPixelHandler = async (req, res, next) => {
         console.log("Sent:", fileName);
       }
     });
-  }
+
   } catch (error) {
     console.log(error, "Checking error");
   }
