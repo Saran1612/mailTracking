@@ -9,7 +9,18 @@ const CreateRecipientandMessage = async (req, res, next)=>{
   let createdRecipient = false;
   try{
     await MysqlQueryExecute('START TRANSACTION');
-    for (const item of RecipientData) {
+    let senderId;
+    const [SenderExist] = await MysqlQueryExecute(`SELECT senderId, COUNT(senderId) as senderCount from absyz_email_track.Sender WHERE senderMail = "${RecipientData.senderMail}"`);
+    // console.log(SenderExist,"Sender exist");
+    if(SenderExist.senderCount === 0){
+    const InsertedSender = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Sender(senderMail) VALUES ("${RecipientData.senderMail}") `);
+    console.log(InsertedSender,"Check sender details")
+    senderId = InsertedSender.insertId;
+    }else{
+      senderId = SenderExist.senderId;
+    }
+    console.log(senderId);
+    for (const item of RecipientData.messages) {
       let countQuery = `SELECT Recipient_id ,COUNT(Recipient_id) AS RecipientCount FROM absyz_email_track.Recipient_Details WHERE  RecipientEmail = "${item.email}"`;
       let Recipient_Data = await MysqlQueryExecute(countQuery);
       // console.log(Recipient_Data,"Final Count Check");
@@ -21,7 +32,7 @@ const CreateRecipientandMessage = async (req, res, next)=>{
         const currentDateTimeString = moment().format('YYYY-MM-DD HH:mm:ss');
         console.log(currentDateTimeString,"currentDateTimeString")
         console.log(recipientResult.insertId, "Check recp");
-        const CreateMessage = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.insertId}, "${item.subject}", "${item.MessageId}", "${currentDateTimeString}")`);
+        const CreateMessage = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time, Sender_id) VALUES (${recipientResult.insertId}, "${item.subject}", "${item.MessageId}", "${currentDateTimeString}", ${senderId})`);
         console.log(CreateMessage.insertId, "Check created Message");
 
         const TrackerData = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Tracker (user_id, message_id, Time_Stamp) VALUES(${recipientResult.insertId}, ${CreateMessage.insertId}, "${currentDateTimeString}")`);
@@ -46,7 +57,7 @@ const CreateRecipientandMessage = async (req, res, next)=>{
         const currentDateTimeString = moment().format('YYYY-MM-DD HH:mm:ss');
         console.log(currentDateTimeString,"currentDateTimeString")
         console.log(recipientResult.RecipientsId, "Check recp");
-        const CreateMessage = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time) VALUES (${recipientResult.RecipientsId}, "${item.subject}", "${item.MessageId}","${currentDateTimeString}")`);
+        const CreateMessage = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Mail_Message (User_Id, Message_Subject, Message_Unique_Key, Sent_Time, Sender_id) VALUES (${recipientResult.RecipientsId}, "${item.subject}", "${item.MessageId}","${currentDateTimeString}", ${senderId})`);
         console.log(CreateMessage.insertId, "Check created Message");
 
         const TrackerData = await MysqlQueryExecute(`INSERT INTO absyz_email_track.Tracker (user_id, message_id, Time_Stamp) VALUES(${recipientResult.RecipientsId}, ${CreateMessage.insertId}, "${currentDateTimeString}")`);
