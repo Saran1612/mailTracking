@@ -1,5 +1,5 @@
-const express=require("express")
-const router=express.Router();
+const express = require("express")
+const router = express.Router();
 const CreateRecipientandMessage = require("../Handler/createRecipient")
 const TrackPixelHandler = require("../Handler/trackingPixelHandler")
 const TrackLinkHandler = require("../Handler/linkTrackHandler")
@@ -12,14 +12,16 @@ const getSender = require("../Handler/sender")
 
 
 /***All the routes */
-router.post("/RecipientDetails",CreateRecipientandMessage);
-router.get("/TrackingPixel",IncominRequestHelper, TrackPixelHandler);
+router.post("/RecipientDetails", CreateRecipientandMessage);
+router.get("/TrackingPixel",
+    // IncominRequestHelper,
+    TrackPixelHandler);
 router.get("/TrackLink", TrackLinkHandler);
 router.get("/GetMessageByDate", GetMessageHandler);
 router.get("/GetRecipients", recipientDataHandler);
-router.get("/getTrackerLinkData",linkTrackHandler);
-router.get("/getSenderDetails",getSender);
+router.get("/getTrackerLinkData", linkTrackHandler);
+router.get("/getSenderDetails", getSender);
 
-  
+
 // Importing the router
-module.exports=router
+module.exports = router
